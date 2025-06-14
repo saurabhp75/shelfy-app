@@ -7,7 +7,7 @@ const Home = () => {
     <View style={styles.container}>
       <Image source={Logo} style={styles.img} />
 
-      <Text style={styles.title}>The Number 1</Text>
+      <Text style={[styles.title, { color: "purple" }]}>The Number 1</Text>
 
       <Text
         style={{
