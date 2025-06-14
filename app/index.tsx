@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 const Logo = require("../assets/img/logo_light.png");
 import React from "react";
+import { Link } from "expo-router";
 
 const Home = () => {
   return (
@@ -20,6 +21,13 @@ const Home = () => {
       >
         Reading List App
       </Text>
+
+      <Link href="/about" style={styles.link}>
+        About Page
+      </Link>
+      <Link href="/contact" style={styles.link}>
+        Contact Page
+      </Link>
     </View>
   );
 };
@@ -39,6 +47,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     textAlign: "center", // Added textAlign to title
+  },
+  link: {
+    marginVertical: 10,
+    borderBottomWidth: 1,
   },
 });
 
