@@ -1,6 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 const Logo = require("../assets/img/logo_light.png");
-import React from "react";
 import { Link } from "expo-router";
 
 const Home = () => {
