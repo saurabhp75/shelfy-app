@@ -1,46 +1,41 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-const Logo = require("../assets/img/logo_light.png");
+import { StyleSheet } from "react-native";
 import { Link } from "expo-router";
+import Spacer from "../components/Spacer";
+import ThemedLogo from "../components/ThemedLogo";
+import ThemedText from "../components/ThemedText";
+import ThemedView from "../components/ThemedView";
 
 const Home = () => {
   return (
-    <View style={styles.container}>
-      <Image source={Logo} style={styles.img} />
+    <ThemedView style={styles.container}>
+      <ThemedLogo />
+      <Spacer />
 
-      <Text style={[styles.title, { color: "purple" }]}>The Number 1</Text>
+      <ThemedText style={styles.title} title={true}>
+        The Number 1
+      </ThemedText>
 
-      <Text
-        style={{
-          marginTop: 10,
-          marginBottom: 30,
-          paddingHorizontal: 5,
-          width: "100%",
-          textAlign: "center",
-        }}
-      >
+      <ThemedText style={{ marginTop: 10, marginBottom: 30, width: "30%" }}>
         Reading List App
-      </Text>
+      </ThemedText>
 
       <Link href="/about" style={styles.link}>
-        About Page
+        <ThemedText>About Page</ThemedText>
       </Link>
+
       <Link href="/contact" style={styles.link}>
-        Contact Page
+        <ThemedText>Contact Page</ThemedText>
       </Link>
-    </View>
+    </ThemedView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#e0dfe8",
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 10, // Added padding to the main container
-  },
-  img: {
-    marginVertical: 20,
   },
   title: {
     fontWeight: "bold",
@@ -50,6 +45,7 @@ const styles = StyleSheet.create({
   link: {
     marginVertical: 10,
     borderBottomWidth: 1,
+    width: "30%",
   },
 });
 
