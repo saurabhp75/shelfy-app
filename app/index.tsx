@@ -20,14 +20,6 @@ const Home = () => {
       >
         Reading List App
       </Text>
-
-      <View style={styles.card}>
-        <Text
-          style={{ paddingHorizontal: 5, width: "100%", textAlign: "center" }}
-        >
-          Hello, this is a Card
-        </Text>
-      </View>
     </View>
   );
 };
@@ -47,13 +39,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 18,
     textAlign: "center", // Added textAlign to title
-  },
-  card: {
-    backgroundColor: "#fff",
-    padding: 20,
-    borderRadius: 5,
-    width: "60%", // Set card width to 90% to ensure it's not too wide
-    alignItems: "center", // Center content within the card
   },
 });
 
