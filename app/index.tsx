@@ -35,12 +35,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    paddingHorizontal: 10, // Added padding to the main container
+    // paddingHorizontal: 10, // Added padding to the main container
   },
   title: {
     fontWeight: "bold",
     fontSize: 18,
-    textAlign: "center", // Added textAlign to title
+    // textAlign: "center", // Added textAlign to title
   },
   link: {
     marginVertical: 10,
