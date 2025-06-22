@@ -56,7 +56,10 @@ export function UserProvider({ children }: UserProviderProps) {
     }
   }
 
-  async function logout(): Promise<void> {}
+  async function logout(): Promise<void> {
+    await account.deleteSession("current");
+    setUser(null);
+  }
 
   return (
     <UserContext.Provider
