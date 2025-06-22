@@ -35,7 +35,11 @@ export function UserProvider({ children }: UserProviderProps) {
       const response = await account.get();
       setUser(response);
     } catch (error) {
-      console.log(error instanceof Error ? error.message : "An error occurred");
+      if (error instanceof Error) {
+        throw Error(error.message);
+      } else {
+        throw Error(String(error));
+      }
     }
   }
 
@@ -44,7 +48,11 @@ export function UserProvider({ children }: UserProviderProps) {
       await account.create(ID.unique(), email, password);
       await login(email, password);
     } catch (error) {
-      console.log(error instanceof Error ? error.message : "An error occurred");
+      if (error instanceof Error) {
+        throw Error(error.message);
+      } else {
+        throw Error(String(error));
+      }
     }
   }
 
