@@ -5,7 +5,7 @@ import {
   ReactNode,
   useEffect,
 } from "react";
-import { databases } from "../lib/appwrite";
+import { client, databases } from "../lib/appwrite";
 import { ID, Permission, Query, Role } from "react-native-appwrite";
 import { useUser } from "../hooks/useUser";
 
@@ -104,11 +104,38 @@ export function BooksProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
+    let unsubscribe: (() => void) | undefined;
+    const channel = `databases.${process.env
+      .EXPO_PUBLIC_SHELFY_DB_ID!}.collections.${process.env
+      .EXPO_PUBLIC_BOOKS_COLLECTION_ID!}.documents`;
+
     if (user) {
       fetchBooks();
+
+      unsubscribe = client.subscribe(channel, (response) => {
+        const { payload, events } = response;
+        // console.log(events);
+
+        if (events[0].includes("create")) {
+          setBooks((prevBooks) => [...prevBooks, payload as unknown as Book]);
+        }
+
+        if (events[0].includes("delete")) {
+          setBooks((prevBooks) =>
+            prevBooks.filter(
+              (book) => book.$id !== (payload as unknown as Book).$id
+            )
+          );
+        }
+      });
     } else {
       setBooks([]);
     }
+
+    // Clenup subscription on unmount or when user changes
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   }, [user]);
 
   return (
