@@ -147,11 +147,4 @@ export function BooksProvider({ children }: { children: ReactNode }) {
   );
 }
 
-// Custom hook to use the BooksContext
-export function useBooks(): BooksContextType {
-  const context = useContext(BooksContext);
-  if (context === undefined) {
-    throw new Error("useBooks must be used within a BooksProvider");
-  }
-  return context;
-}
+
