@@ -1,7 +1,13 @@
-import { createContext, useState, useContext, ReactNode } from "react";
+import {
+  createContext,
+  useState,
+  useContext,
+  ReactNode,
+  useEffect,
+} from "react";
 import { databases } from "../lib/appwrite";
-import { ID, Permission, Role } from "react-native-appwrite";
-import { useUser } from "../contexts/UserContext";
+import { ID, Permission, Query, Role } from "react-native-appwrite";
+import { useUser } from "../hooks/useUser";
 
 // Define book type
 export interface Book {
@@ -38,9 +44,11 @@ export function BooksProvider({ children }: { children: ReactNode }) {
       if (!user) return;
       const response = await databases.listDocuments(
         process.env.EXPO_PUBLIC_SHELFY_DB_ID!,
-        process.env.EXPO_PUBLIC_BOOKS_COLLECTION_ID!
+        process.env.EXPO_PUBLIC_BOOKS_COLLECTION_ID!,
+        [Query.equal("userId", user.$id)]
       );
       setBooks(response.documents as unknown as Book[]);
+      console.dir(response.documents);
     } catch (error) {
       console.log(error instanceof Error ? error.message : "An error occurred");
     }
@@ -94,6 +102,14 @@ export function BooksProvider({ children }: { children: ReactNode }) {
       console.log(error instanceof Error ? error.message : "An error occurred");
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      fetchBooks();
+    } else {
+      setBooks([]);
+    }
+  }, [user]);
 
   return (
     <BooksContext.Provider

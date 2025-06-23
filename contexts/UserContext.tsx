@@ -99,13 +99,4 @@ export function UserProvider({ children }: UserProviderProps) {
   );
 }
 
-// Custom hook to use the UserContext
-export function useUser(): UserContextType {
-  const context = useContext(UserContext);
-  if (context === undefined) {
-    throw new Error("useUser must be used within a UserProvider");
-  }
-  return context;
-}
-
 // Wrap the UserProvider component around the root layout stack
