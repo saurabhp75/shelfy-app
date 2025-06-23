@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useContext } from "react";
+import { createContext, useState, ReactNode, useContext, useEffect } from "react";
 import { account } from "../lib/appwrite";
 import { ID } from "react-native-appwrite";
 
@@ -15,6 +15,7 @@ export interface UserContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
+  authChecked: boolean;
 }
 
 // Define provider props type
@@ -28,6 +29,7 @@ export const UserContext = createContext<UserContextType | undefined>(
 
 export function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState<User | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   async function login(email: string, password: string): Promise<void> {
     try {
@@ -60,6 +62,21 @@ export function UserProvider({ children }: UserProviderProps) {
     await account.deleteSession("current");
     setUser(null);
   }
+  
+  async function getInitialUserValue() {
+    try {
+      const res = await account.get();
+      setUser(res);
+    } catch (error) {
+      setUser(null);
+    } finally {
+      setAuthChecked(true);
+    }
+  }
+
+  useEffect(() => {
+    getInitialUserValue();
+  }, []);
 
   return (
     <UserContext.Provider
@@ -68,6 +85,7 @@ export function UserProvider({ children }: UserProviderProps) {
         login,
         logout,
         register,
+        authChecked
       }}
     >
       {children}
