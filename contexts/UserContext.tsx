@@ -1,4 +1,10 @@
-import { createContext, useState, ReactNode, useContext, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useContext,
+  useEffect,
+} from "react";
 import { account } from "../lib/appwrite";
 import { ID } from "react-native-appwrite";
 
@@ -62,7 +68,7 @@ export function UserProvider({ children }: UserProviderProps) {
     await account.deleteSession("current");
     setUser(null);
   }
-  
+
   async function getInitialUserValue() {
     try {
       const res = await account.get();
@@ -85,12 +91,21 @@ export function UserProvider({ children }: UserProviderProps) {
         login,
         logout,
         register,
-        authChecked
+        authChecked,
       }}
     >
       {children}
     </UserContext.Provider>
   );
+}
+
+// Custom hook to use the UserContext
+export function useUser(): UserContextType {
+  const context = useContext(UserContext);
+  if (context === undefined) {
+    throw new Error("useUser must be used within a UserProvider");
+  }
+  return context;
 }
 
 // Wrap the UserProvider component around the root layout stack
